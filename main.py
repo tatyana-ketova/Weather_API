@@ -4,13 +4,42 @@
 # Press Double ⇧ to search everywhere for classes, files, tool windows, actions, and settings.
 
 
-def print_hi(name):
-    # Use a breakpoint in the code line below to debug your script.
-    print(f'Hi, {name}')  # Press ⌘F8 to toggle the breakpoint.
+import socket
+import requests
 
 
-# Press the green button in the gutter to run the script.
-if __name__ == '__main__':
-    print_hi('PyCharm')
+def weather(city):
+    api_key = '58a62c5498044befcb004ffa3d6cc9db'
 
-# See PyCharm help at https://www.jetbrains.com/help/pycharm/
+    url = f'http://api.openweathermap.org/data/2.5/weather?q={city}&appid={api_key}'
+
+    response = requests.get(url)
+
+    if response.status_code == 200:
+        data = response.json()
+        temp = round(data['main']['temp']- 273.15, 2)
+        desc = data['weather'][0]['description']
+        pressure = data['main']['pressure']
+        humidity = data['main']['humidity']
+        windspeed = data['wind']['speed']
+        print(f'Temperature: {temp} °C')
+        print(f'Description: {desc}')
+        print(f'Pressure: {pressure}')
+        print(f'Humidity: {humidity}')
+        print(f'Wind_speed: {windspeed}')
+
+    else:
+        print('Error fetching weather data')
+
+
+if __name__ == "__main__":
+    hostname = socket.gethostname()
+
+    ip_address = socket.gethostbyname(hostname)
+    request_url = 'https://geolocation-db.com/jsonp/' + ip_address
+    print(ip_address)
+    response = requests.get("https://ipinfo.io/json")
+    data = response.json()
+    city = data.get('city')
+    print(f'City: {city}')
+    weather(city)
