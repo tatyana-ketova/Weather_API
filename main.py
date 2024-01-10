@@ -9,12 +9,9 @@ import requests
 
 
 def weather(city):
-    api_key = '58a62c5498044befcb004ffa3d6cc9db'
-
+    api_key = "****"
     url = f'http://api.openweathermap.org/data/2.5/weather?q={city}&appid={api_key}'
-
     response = requests.get(url)
-
     if response.status_code == 200:
         data = response.json()
         temp = round(data['main']['temp']- 273.15, 2)
@@ -31,13 +28,10 @@ def weather(city):
     else:
         print('Error fetching weather data')
 
-
 if __name__ == "__main__":
     hostname = socket.gethostname()
-
     ip_address = socket.gethostbyname(hostname)
     request_url = 'https://geolocation-db.com/jsonp/' + ip_address
-    print(ip_address)
     response = requests.get("https://ipinfo.io/json")
     data = response.json()
     city = data.get('city')
